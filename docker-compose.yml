@@ -8,6 +8,9 @@ services:
         - DEV=true
     ports:
       - "8000:8000"
+    environment:
+      - EMAIL_ID=tucorreo
+      - EMAIL_PW=tucontra
     volumes:
       - ./recruiterapp:/recruiterapp
     command:  >
