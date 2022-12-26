@@ -9,10 +9,11 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - EMAIL_ID=tucorreo
-      - EMAIL_PW=tucontra
+      - EMAIL_ID=testmail
+      - EMAIL_PW=testpass
     volumes:
       - ./recruiterapp:/recruiterapp
     command:  >
-      sh -c "python manage.py migrate &&
+      sh -c "python manage.py makemigrations &&
+             python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"

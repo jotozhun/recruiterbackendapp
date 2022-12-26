@@ -8,6 +8,7 @@ class TestUserCreation(TestCase):
 
     def setUp(self):
         self.test_email="test@example.com"
+        self.expected_username="test"
         self.test_password="testpass123"
         self.expected_emails=[
             ("test1@EXAMPLE.com","test1@example.com"),
@@ -70,3 +71,4 @@ class TestUserCreation(TestCase):
         )
         self.assertTrue(user.is_staff)
         self.assertTrue(user.is_superuser)
+    

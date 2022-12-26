@@ -30,6 +30,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """Base user to create"""
     email = models.EmailField(max_length=254, unique=True)
+    username = models.CharField(max_length=128, null=False, default="def_user")
     name = models.CharField(max_length=128)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
