@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
     BaseUserManager
 )
 
+
 class UserManager(BaseUserManager):
     """Manager for users"""
 
@@ -26,6 +27,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
 
         return user
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     """Base user to create"""

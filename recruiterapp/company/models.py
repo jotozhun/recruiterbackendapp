@@ -1,13 +1,14 @@
 from django.db import models
+from django.conf import settings
 
-# Create your models here.
 
 class Company(models.Model):
-    """Class for Company"""
+    """Model for Company"""
     identifier = models.CharField(max_length=32, unique=True)
     name = models.CharField(max_length=64)
     email = models.EmailField(max_length=254, unique=True)
-    description = models.TextField(max_length=254, default="Initial description")
+    description = models.TextField(max_length=254,
+                                   default="Initial description")
     country = models.CharField(max_length=64)
     city = models.CharField(max_length=64)
     zip_code = models.CharField(max_length=10)
@@ -18,3 +19,20 @@ class Company(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class CompanyEmployer(models.Model):
+    """Model that shows the employees of a Company"""
+    company_id = models.ForeignKey(
+        "company.Company",
+        on_delete=models.CASCADE,
+    )
+    user_id = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    role = models.CharField(max_length=32, default="Recruiter")
+    added_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f"{self.user_id.name} - {self.user_id.email} - " + self.role

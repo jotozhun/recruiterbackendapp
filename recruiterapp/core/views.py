@@ -12,12 +12,14 @@ from django.urls import reverse
 from django.conf import settings
 from datetime import datetime
 
+
 class UserAPI(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated, ]
     serializer_class = UserSerializer
 
     def get_object(self):
         return self.request.user
+
 
 class RegisterAPI(generics.GenericAPIView):
     """
@@ -38,22 +40,28 @@ class RegisterAPI(generics.GenericAPIView):
 
         current_site = get_current_site(request).domain
         relativeLink = reverse('email-verify')
-        absurl = 'http://'+current_site+relativeLink+"?token="+str(token)
-        email_body = 'Hi '+user.email+' Use linkn below to verify your email\n'+absurl
-        data={'email_body': email_body, 'to_email': user.email,'email_subject': 'Verify your email'}
+        absurl = 'http://' + current_site+relativeLink + "?token=" + str(token)
+        email_body = 'Hi ' + user.email
+        email_body += ' Use link below to verify your email\n' + absurl
+        data = {'email_body': email_body,
+                'to_email': user.email,
+                'email_subject': 'Verify your email'}
         Util.send_email(data)
-        
+        serializer_context = self.get_serializer_context()
         return Response({
-            "user": UserSerializer(user_data, context=self.get_serializer_context()).data,
-        })
+            "user": UserSerializer(user_data,
+                                   context=serializer_context).data, })
+
 
 class LoginAPI(TokenObtainPairView):
     """Hello"""
-    
+
     def post(self, request, *args, **kwargs):
         data = super().post(request, args, kwargs).data
         try:
-            payload = jwt.decode(data["access"], settings.SECRET_KEY, algorithms='HS256')
+            payload = jwt.decode(data["access"],
+                                 settings.SECRET_KEY,
+                                 algorithms='HS256')
             user = User.objects.get(id=payload['user_id'])
             user.last_login = datetime.now()
             user.save()
@@ -63,12 +71,15 @@ class LoginAPI(TokenObtainPairView):
                 'error': "An Unexpected error has occurred"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
 class VerifyEmail(generics.GenericAPIView):
 
     def get(self, request):
         token = request.GET.get('token')
         try:
-            payload = jwt.decode(token, settings.SECRET_KEY, algorithms='HS256')
+            payload = jwt.decode(token,
+                                 settings.SECRET_KEY,
+                                 algorithms='HS256')
             user = User.objects.get(id=payload['user_id'])
             if not user.is_active:
                 user.is_active = True
@@ -79,7 +90,8 @@ class VerifyEmail(generics.GenericAPIView):
 
         except jwt.ExpiredSignatureError as expired_error:
             return Response({
-                'error': "Activation Expired"},
+                'error': "Activation Expired" + str(expired_error)},
                 status=status.HTTP_400_BAD_REQUEST)
         except jwt.exceptions.DecodeError as decode_error:
-            return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Invalid token' + str(decode_error)},
+                            status=status.HTTP_400_BAD_REQUEST)

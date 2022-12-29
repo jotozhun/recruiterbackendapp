@@ -1,22 +1,22 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
-
 from datetime import datetime
+
 
 class TestUserCreation(TestCase):
     """Tests user creation scenarios."""
 
     def setUp(self):
-        self.test_email="test@example.com"
-        self.expected_username="test"
-        self.test_password="testpass123"
-        self.expected_emails=[
-            ("test1@EXAMPLE.com","test1@example.com"),
+        self.test_email = "test@example.com"
+        self.expected_username = "test"
+        self.test_password = "testpass123"
+        self.expected_emails = [
+            ("test1@EXAMPLE.com", "test1@example.com"),
             ("Test2@Example.com", "Test2@example.com"),
             ("TEST3@EXAMPLE.COM", "TEST3@example.com"),
             ("test4@eXAMPLE.com", "test4@example.com"),
         ]
-        self.dateformat="%Y-%m-%d %H:%M"
+        self.dateformat = "%Y-%m-%d %H:%M"
 
     def test_user_creation_with_email(self):
         """Test user can be created using email."""
@@ -53,7 +53,10 @@ class TestUserCreation(TestCase):
             )
 
     def test_created_account_date_when_create_user(self):
-        """Test the user account datetime to be set after being created with minutes accuracy."""
+        """
+            Test the user account datetime to be set
+            after being created with minutes accuracy.
+        """
         user = get_user_model().objects.create_user(
             email=self.test_email,
             password=self.test_password,
@@ -71,4 +74,3 @@ class TestUserCreation(TestCase):
         )
         self.assertTrue(user.is_staff)
         self.assertTrue(user.is_superuser)
-    

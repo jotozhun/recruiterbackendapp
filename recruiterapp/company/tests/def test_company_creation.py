@@ -2,6 +2,7 @@
 from django.test import TestCase
 from company.models import Company
 
+
 class TestCompanyCreation(TestCase):
     """Tests creation of a company"""
 
