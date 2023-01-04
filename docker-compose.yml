@@ -8,13 +8,13 @@ services:
         - DEV=true
     ports:
       - "8000:8000"
-    environment:
-      - EMAIL_ID=changeme
-      - EMAIL_PW=changeme
-      - DB_HOST=db
-      - DB_NAME=devdb
-      - DB_USER=devuser
-      - DB_PASS=changeme
+    # environment:
+    #   - EMAIL_ID=changeme
+    #   - EMAIL_PW=changeme
+    #   - DB_HOST=db
+    #   - DB_NAME=devdb
+    #   - DB_USER=devuser
+    #   - DB_PASS=changeme
     volumes:
       - ./recruiterapp:/recruiterapp
     command:  >
@@ -32,7 +32,7 @@ services:
     environment:
       - POSTGRES_DB=devdb
       - POSTGRES_USER=devuser
-      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_PASSWORD=devpassword
 
 volumes:
   dev-db-data:
