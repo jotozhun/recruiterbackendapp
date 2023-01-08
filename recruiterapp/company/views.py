@@ -54,7 +54,9 @@ class CompanyEmployerListView(generics.ListAPIView):
 
 
 class AssignUserToCompanyView(generics.CreateAPIView):
-    """"""
+    """
+        Assigns an unique user to a company class
+    """
     # permission_classes = [permissions.IsAuthenticated,]
     serializer_class = company_serializers.AssignUserToCompanySerializer
 
