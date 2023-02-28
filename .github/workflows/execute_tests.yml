@@ -18,7 +18,26 @@ jobs:
         uses: actions/checkout@v3
       - name: Build
         run: docker-compose build
+      - name: Set Secrets file
+        run: 'echo "$EMAIL_ID" >> .env && \
+              echo "EMAIL_PW" >> .env && \'
+              echo "EMAIL_PORT" >> .env && \'
+              echo "DB_HOST" >> .env && \'
+              echo "DB_NAME" >> .env && \'
+              echo "DB_USER" >> .env && \'
+              echo "DB_PASS" >> .env && \'
+              echo "DJANGO_SECRET_KEY" >> .env'
+        env:
+          EMAIL_ID: ${{secrets.EMAIL_ID}}
+          EMAIL_PW: ${{secrets.EMAIL_PW}}
+          EMAIL_PORT: ${{secrets.EMAIL_PORT}}
+          DB_HOST: ${{secrets.DB_HOST}}
+          DB_NAME: ${{secrets.DB_NAME}}
+          DB_USER: ${{secrets.DB_USER}}
+          DB_PASS: ${{secrets.DB_PASS}}
+          DJANGO_SECRET_KEY: ${{secrets.DJANGO_SECRET_KEY}}
       - name: Test
         run: docker-compose run --rm recruiterapp sh -c "python manage.py wait_for_db && python manage.py test"
+        
       - name: Linter
         run: docker-compose run --rm recruiterapp sh -c "flake8"
