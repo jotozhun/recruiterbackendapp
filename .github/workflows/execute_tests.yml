@@ -16,8 +16,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Build
-        run: docker-compose build
       - name: Set Secrets file
         run: 'echo "$EMAIL_ID" >> .env && \
               echo "EMAIL_PW" >> .env && \
@@ -27,6 +25,8 @@ jobs:
               echo "DB_USER" >> .env && \
               echo "DB_PASS" >> .env && \
               echo "DJANGO_SECRET_KEY" >> .env'
+      - name: Build
+        run: docker-compose build
         # env:
         #   EMAIL_ID: ${{secrets.EMAIL_ID}}
         #   EMAIL_PW: ${{secrets.EMAIL_PW}}
