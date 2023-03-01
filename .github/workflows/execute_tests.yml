@@ -49,6 +49,24 @@ jobs:
     
       - name: Test
         run: docker-compose run --rm recruiterapp sh -c "python manage.py wait_for_db && python manage.py test"
-        
+        env:
+          EMAIL_ID: ${{secrets.EMAIL_ID}}
+          EMAIL_PW: ${{secrets.EMAIL_PW}}
+          EMAIL_PORT: ${{secrets.EMAIL_PORT}}
+          DB_HOST: ${{secrets.DB_HOST}}
+          DB_NAME: ${{secrets.DB_NAME}}
+          DB_USER: ${{secrets.DB_USER}}
+          DB_PASS: ${{secrets.DB_PASS}}
+          DJANGO_SECRET_KEY: ${{secrets.DJANGO_SECRET_KEY}}
+
       - name: Linter
         run: docker-compose run --rm recruiterapp sh -c "flake8"
+        env:
+          EMAIL_ID: ${{secrets.EMAIL_ID}}
+          EMAIL_PW: ${{secrets.EMAIL_PW}}
+          EMAIL_PORT: ${{secrets.EMAIL_PORT}}
+          DB_HOST: ${{secrets.DB_HOST}}
+          DB_NAME: ${{secrets.DB_NAME}}
+          DB_USER: ${{secrets.DB_USER}}
+          DB_PASS: ${{secrets.DB_PASS}}
+          DJANGO_SECRET_KEY: ${{secrets.DJANGO_SECRET_KEY}}
