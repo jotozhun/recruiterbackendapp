@@ -11,6 +11,7 @@ services:
     environment:
       - EMAIL_ID=${EMAIL_ID}
       - EMAIL_PW=${EMAIL_PW}
+      - EMAIL_PORT=${EMAIL_PORT}
       - DB_HOST=db
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
