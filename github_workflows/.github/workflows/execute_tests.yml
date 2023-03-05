@@ -16,11 +16,12 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Create secrets
+        shell: bash
+        run: |
       - name: Build
         run: docker-compose build
-        
       - name: Test
         run: docker-compose run --rm recruiterapp sh -c "python manage.py wait_for_db && python manage.py test"
-        
       - name: Linter
         run: docker-compose run --rm recruiterapp sh -c "flake8"

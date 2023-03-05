@@ -17,8 +17,8 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
-    # env_file:
-    #   - .env
+    env_file:
+      - .env
     volumes:
       - ./recruiterapp:/recruiterapp
     command:  >
@@ -37,8 +37,8 @@ services:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASS}
-    # env_file:
-    #   - .env
+    env_file:
+      - .env
     ports:
       - "5433:5432"
     
