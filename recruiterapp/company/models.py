@@ -34,5 +34,5 @@ class CompanyEmployer(models.Model):
     role = models.CharField(max_length=32, default="Recruiter")
     added_on = models.DateTimeField(auto_now=True)
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f"{self.user_id.name} - {self.user_id.email} - " + self.role
