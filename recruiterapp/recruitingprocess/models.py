@@ -14,9 +14,9 @@ class RecruitingProcessModel(models.Model):
     role = models.CharField(max_length=64)
     status = models.CharField(max_length=32, default="Started")
     started_on = models.DateTimeField(auto_now=True)
-    
-    
-class JobRoleClass(models.Model):
+
+
+class JobRoleModel(models.Model):
     """Model that represents a job position in a company"""
     company_id = models.ForeignKey(
         "company.Company",
@@ -34,4 +34,3 @@ class CandidateModel(models.Model):
     name = models.CharField(max_length=64)
     lastname = models.CharField(max_length=64)
     contact_email = models.EmailField(max_length=64)
-    
